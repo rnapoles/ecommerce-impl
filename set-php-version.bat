@@ -1,0 +1,1 @@
+set PATH=C:\Programas\dev\php\8.1.0\;%PATH%
