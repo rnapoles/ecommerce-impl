@@ -13,6 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.15",
         "elasticsearch/elasticsearch": "^8.8",
+        "fzaninotto/faker": "^1.5",
         "lexik/jwt-authentication-bundle": "^2.18",
         "nelmio/cors-bundle": "^2.3",
         "stof/doctrine-extensions-bundle": "^1.7",
