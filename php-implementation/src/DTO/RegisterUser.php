@@ -10,12 +10,10 @@ class RegisterUser
 {
 
     #[Assert\Email]
-    #[Assert\NotBlank]
-    #[Assert\NotNull]
-    public string $email;
+    public string $email = '';
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    public string $password; 
+    public string $password = ''; 
    
 }

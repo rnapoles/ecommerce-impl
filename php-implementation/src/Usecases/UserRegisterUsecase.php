@@ -28,7 +28,7 @@ class UserRegisterUsecase extends BaseUsecase {
   public function execute(mixed $data){
 
     $dto = $this->serializer->deserialize($data, RegisterUser::class, 'json');
-    //$this->validate($dto);
+    $this->validate($dto);
 
     $userRole = $this->groupRepo->findOneByName('ROLE_USER');
     if(!$userRole){

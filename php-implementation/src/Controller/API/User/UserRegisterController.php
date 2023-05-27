@@ -35,7 +35,6 @@ class UserRegisterController extends BaseController
             return $jsonResponse;
         }
 
-
         return $this->json($responseObj);
     }
 }

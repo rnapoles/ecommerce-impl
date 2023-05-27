@@ -16,7 +16,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UpdateUserUsecase extends BaseUsecase {
   
-  public isSimpleUpdate = false;
+  public $isSimpleUpdate = false;
 
   function __construct(
     private UserRepository $userRepo,
@@ -33,7 +33,7 @@ class UpdateUserUsecase extends BaseUsecase {
     $dto = $this->serializer->deserialize($data, UpdateUser::class, 'json');
     $this->validate($dto);
 
-    //$user = new User();
+    $user = new User();
     $password = $this->passwordEncoder->hashPassword($user, $dto->password); 
 
     $user->setPassword($password);

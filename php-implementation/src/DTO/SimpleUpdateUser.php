@@ -11,13 +11,13 @@ class SimpleUpdateUser
 {
 
     #[Assert\PositiveOrZero]
-    public int $id;
+    public int $id = -1;
 
     #[Assert\Email]
-    public string $email;
+    public string $email = '';
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    public string $password;
+    public string $password = '';
 
 }

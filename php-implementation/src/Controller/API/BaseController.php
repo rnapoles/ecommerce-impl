@@ -37,7 +37,8 @@ class BaseController extends AbstractController
     if($ex instanceof ValidationException){
       $responseObj->errors = $ex->errors;
     }
-
+    
+    //dump($ex);
     //todo: custom log exception
 
   }
