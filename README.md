@@ -21,6 +21,3 @@ An e-commerce implementation in diferent programming languages and techs
 cd nodejs-integration-tests
 npm start
 ```
-
-### Docker
-* Todo
