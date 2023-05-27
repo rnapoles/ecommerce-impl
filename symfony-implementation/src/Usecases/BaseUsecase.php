@@ -14,7 +14,7 @@ abstract class BaseUsecase implements IUsecase {
     
   }
 
-  abstract public function execute(mixed $data);
+  abstract public function execute(mixed $data): mixed;
 
   public function validate(object $obj){
 

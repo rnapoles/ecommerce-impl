@@ -21,7 +21,7 @@ class UserRegisterController extends BaseController
         $responseObj = new ResponseObject();
 
         try {
-          $registerUser->execute($request->getContent());
+          $responseObj->payload = $registerUser->execute($request->getContent());
         } catch (\Exception $ex){
 
             $this->processException($ex, $responseObj);

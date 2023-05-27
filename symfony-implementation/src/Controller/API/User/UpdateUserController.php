@@ -14,35 +14,49 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UpdateUserController extends BaseController
 {
     #[IsGranted('ROLE_ADMIN')]
     #[Route(
       '/api/user/update/{id}',
-      name: 'api_user_register',
+      name: 'api_user_update',
       methods: ['POST'],
       requirements: ['id' => '\d+']
     )]
     public function index(
       Request $request,
-      #[MapEntity] User $user,
-      UpdateUserUsecase $updateUser
+      UpdateUserUsecase $updateUser,
     ): JsonResponse
     {
       
         $responseObj = new ResponseObject();
 
         try {
-          $updateUser->execute($request->getContent());
+
+          $result = $updateUser->execute($request->getContent());
+          if(!$result){
+            throw $this->createNotFoundException(
+                'User not found'
+            );
+          }
+          
+          $responseObj->payload = $result;
+          
         } catch (\Exception $ex){
 
             $this->processException($ex, $responseObj);
 
+            $statusCode = JsonResponse::HTTP_BAD_REQUEST;
+            if($ex instanceof HttpException){
+              $statusCode = $ex->getStatusCode();
+            }
+
             $jsonResponse = $this->json($responseObj);
             $jsonResponse->setStatusCode(
-              JsonResponse::HTTP_BAD_REQUEST
-              , $ex->getMessage()
+              $statusCode,
+              $ex->getMessage()
             );
 
             return $jsonResponse;

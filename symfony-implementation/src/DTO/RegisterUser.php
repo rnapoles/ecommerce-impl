@@ -14,6 +14,9 @@ class RegisterUser
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    public string $password = ''; 
+    public string $password = '';
+
+    #[Assert\NotNull]
+    public array $roles = ['ROLE_USER'];
    
 }

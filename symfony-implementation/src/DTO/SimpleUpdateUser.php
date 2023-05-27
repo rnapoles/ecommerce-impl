@@ -16,8 +16,6 @@ class SimpleUpdateUser
     #[Assert\Email]
     public string $email = '';
 
-    #[Assert\NotBlank]
-    #[Assert\NotNull]
-    public string $password = '';
+    public ?string $password = null;
 
 }

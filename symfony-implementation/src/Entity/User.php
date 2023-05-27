@@ -12,18 +12,18 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * User
  **/
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: "username")]
+#[UniqueEntity(fields: "name")]
 #[UniqueEntity(fields: "email")]
 #[ORM\Table(name: "User",
    indexes: [
      new ORM\Index(
-       columns: ["username"]
+       columns: ["name"]
      ),
      new ORM\Index(
        columns: ["email"]
@@ -46,8 +46,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
    *
    */
   #[Assert\NotBlank]
-  #[ORM\Column(type: "string", name: "username", length: 255, nullable: false, unique: true)]
-  protected string $username;
+  #[ORM\Column(type: "string", name: "name", length: 255, nullable: false, unique: true)]
+  protected string $name;
 
   /**
    @var string
@@ -61,6 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
    @var string
    *
    */
+  #[Ignore]
   #[Assert\NotBlank]
   #[ORM\Column(type: "string", name: "password", length: 255, nullable: false, unique: false)]
   protected string $password;
@@ -84,7 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
   */
   #[ORM\Version]
   #[ORM\Column(type: 'datetime', name: 'lock_version')]
-  protected \DateTime $lockVersion;
+  public \DateTime $lockVersion;
 
   /**
    * User Constructor
@@ -92,7 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
   */
   public function __construct(){
     $this->id = null;
-    $this->username = '';
+    $this->name = '';
     $this->email = '';
     $this->password = '';
     $this->groups = new ArrayCollection();
@@ -109,26 +110,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
   }
 
   /**
-   * Set username
+   * Set name
    *
-   * @param string username
+   * @param string name
    * @return void
   */
-  public function setUsername(string $username)
+  public function setName(string $name)
   {
-    if($this->username != $username){
-      $this->username = $username;
+    if($this->name != $name){
+      $this->name = $name;
     }
   }
 
   /**
-   * Get username
+   * Get name
    *
    * @return string
-  public function getUsername(): string
+  */
+  public function getName(): string
   {
-    return $this->username;
-  }*/
+    return $this->name;
+  }
 
   /**
    * Set email
@@ -140,7 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
   {
     if($this->email != $email){
       $parts = explode('@',$email);
-      $this->setUsername($parts[0]);
+      $this->setName($parts[0]);
       $this->email = $email;
     }
   }
@@ -233,7 +235,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     $obj = new \stdClass();
     $obj->id = $this->id;
-    $obj->username = $this->username;
+    $obj->name = $this->name;
     $obj->email = $this->email;
     $obj->password = $this->password;
 
@@ -279,7 +281,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
    * @return string
   */
   public function __toString(){
-    return $this->username;
+    return $this->name;
   }
 
 }

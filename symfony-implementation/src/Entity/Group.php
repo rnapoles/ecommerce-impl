@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * Group
@@ -38,6 +39,7 @@ class Group implements \Stringable {
    * User
   */
   #[ORM\ManyToMany(targetEntity: "User", mappedBy: "groups", fetch: "LAZY", cascade: ["persist", "remove"])]
+  #[Ignore]
   protected ?Collection $users;
 
   /**
@@ -46,7 +48,7 @@ class Group implements \Stringable {
   */
   #[ORM\Version]
   #[ORM\Column(type: 'datetime', name: 'lock_version')]
-  protected \DateTime $lockVersion;
+  public \DateTime $lockVersion;
 
   /**
    * Group Constructor

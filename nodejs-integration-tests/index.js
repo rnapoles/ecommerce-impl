@@ -54,7 +54,7 @@ httpClient.interceptors.response.use(
 const eventBus = new EventEmitter();
 
 const loginData = {
-  "username": "demo@localhost.loc",
+  "username": "admin@localhost.loc",
   "password": "1234"
 };
 
@@ -63,7 +63,7 @@ const newUserData = {
   "password": "1234"
 };
 
-
+const shareData = {};
 const testData = [
   {
     url: '/login',
@@ -79,6 +79,10 @@ const testData = [
       }
       
       const token = response.data.token;
+      if(!token){
+        return;
+      }
+      
       const jwt = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
       let expire = dateDiffString(new Date(jwt.exp * 1000), new Date()) ;
       console.log(chalk.green(figures.tick), `Token expire in ${expire}`);
@@ -92,12 +96,21 @@ const testData = [
     expectedResponse: {
       success: false
     },
+    postProcess: (response) => {
+      //console.log(response.data)
+    },
     expectedStatus: 400,
   },
   {
     url: '/user/register',
     msg: 'Validate user register',
     data: newUserData,
+    postProcess: (response) => {
+      const data = response.data;
+      if(data.success){
+        shareData.user = data.payload;
+      }
+    },
     expectedResponse: {
       success: true
     },
@@ -111,6 +124,26 @@ const testData = [
       success: true
     },
     expectedStatus: 400,
+  },
+  {
+    url: '/user/update/{id}',
+    msg: 'Validate user update',
+    data: {
+      password: '123456/*'
+    },
+    expectedResponse: {
+      success: true
+    },
+    preProcess: (self) => {
+      
+      const user = shareData.user;
+      
+      if(user){
+        self.url = self.url.replace('{id}', user.id);
+        self.data = user;
+      }
+    },
+    expectedStatus: 200,
   },
 ]
 
@@ -166,6 +199,10 @@ const processResult = (result, current) => {
   if(step < testData.length){
     
     const it = testData[step];
+    if(it.preProcess){
+      it.preProcess(it);
+    }
+
     //console.log(`=== ${step} ===`);
     //console.log(it);
     //console.log(it.url);

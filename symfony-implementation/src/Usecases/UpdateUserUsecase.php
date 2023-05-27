@@ -8,7 +8,6 @@ use App\Entity\User;
 use App\Entity\Group;
 use App\Repository\UserRepository;
 use App\Repository\GroupRepository;
-use App\Exception\ValidationException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,22 +27,36 @@ class UpdateUserUsecase extends BaseUsecase {
     parent::__construct($validator);
   }
 
-  public function execute(mixed $data){
+  public function execute(mixed $data): mixed 
+  {
 
     $dto = $this->serializer->deserialize($data, UpdateUser::class, 'json');
     $this->validate($dto);
 
-    $user = new User();
-    $password = $this->passwordEncoder->hashPassword($user, $dto->password); 
+    $user = $this->userRepo->findOneById($dto->id);
+    if(!$user){
+      return null;
+    }
 
-    $user->setPassword($password);
     $user->setEmail($dto->email);
+    if(!!$dto->password){
+      $password = $this->passwordEncoder->hashPassword($user, $dto->password); 
+      $user->setPassword($password);
+    }
     
-    //if()
-    //$user->addGroup($userRole);
+    $roles = $dto->roles;
+    foreach($roles as $roleName){
+      $role = $this->groupRepo->findOneByName($roleName);
+      if(!$role){
+        throw new \Exception("The $roleName not exist");
+      }
+      $user->addGroup($role);
+    }
 
     $this->validate($user);
     $this->userRepo->save($user, true);
+    
+    return $user;
   }
 
 }
