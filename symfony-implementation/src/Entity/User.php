@@ -69,6 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
   /**
    * Group
   */
+  #[Ignore]
   #[ORM\ManyToMany(targetEntity: "Group", inversedBy: "users", fetch: "LAZY")]
   #[ORM\JoinTable(
     name: "UserGroup",

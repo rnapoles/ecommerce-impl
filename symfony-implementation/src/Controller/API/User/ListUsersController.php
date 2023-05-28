@@ -2,26 +2,34 @@
 
 namespace App\Controller\API\User;
 
-use App\DTO\User\RegisterUser;
 use App\DTO\ResponseObject;
+use App\DTO\PaginateRequest;
 use App\Controller\API\BaseController;
-use App\Usecases\User\UserRegisterUsecase;
+use App\Usecases\User\ListUsersUsecase;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 
-class UserRegisterController extends BaseController
+class ListUsersController extends BaseController
 {
-    #[Route('/api/user/register', name: 'api_user_register', methods: ['POST'])]
-    public function index(Request $request, UserRegisterUsecase $registerUser): JsonResponse
+    #[IsGranted('ROLE_ADMIN')] 
+    #[Route('/api/user/list', name: 'api_user_lists', methods: ['GET'])]
+    public function index(Request $request, ListUsersUsecase $listUsers): JsonResponse
     {
-      
+
         $responseObj = new ResponseObject();
+        $start = (int) $request->query->get('start', 0);
+        $total = (int) $request->query->get('total', 10);
+
+        $dto = new PaginateRequest();
+        $dto->startPage = $start;
+        $dto->total = $total;
 
         try {
-          $responseObj->payload = $registerUser->execute($request->getContent());
+          $responseObj = $listUsers->execute($dto);
         } catch (\Exception $ex){
 
             $this->processException($ex, $responseObj);

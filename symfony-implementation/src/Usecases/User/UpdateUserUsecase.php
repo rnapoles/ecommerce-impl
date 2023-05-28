@@ -2,8 +2,8 @@
 
 namespace App\Usecases\User;
 
-use App\DTO\UpdateUser;
-use App\DTO\SimpleUpdateUser;
+use App\DTO\User\UpdateUser;
+use App\DTO\User\SimpleUpdateUser;
 use App\Entity\User;
 use App\Entity\Group;
 use App\Repository\UserRepository;

@@ -64,9 +64,18 @@ const newUserData = {
 };
 
 const shareData = {};
-const testData = [
+
+const RequestConfig = {
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+};
+
+const EndPoints = [
   {
     url: '/login',
+    method: 'post',
+    config: RequestConfig,
     msg: 'Check login',
     data: loginData,
     expectedResponse: {
@@ -88,9 +97,12 @@ const testData = [
       console.log(chalk.green(figures.tick), `Token expire in ${expire}`);
     },
     expectedStatus: 200,
+    debugResponse: false,
   },
   {
     url: '/user/register',
+    method: 'post',
+    config: RequestConfig,
     msg: 'Validate invalid user register json',
     data: loginData,
     expectedResponse: {
@@ -100,9 +112,13 @@ const testData = [
       //console.log(response.data)
     },
     expectedStatus: 400,
+    debugResponse: false,
+    skip: false,
   },
   {
     url: '/user/register',
+    method: 'post',
+    config: RequestConfig,
     msg: 'Validate user register',
     data: newUserData,
     postProcess: (response) => {
@@ -115,18 +131,24 @@ const testData = [
       success: true
     },
     expectedStatus: 200,
+    debugResponse: false,
   },
   {
     url: '/user/register',
+    method: 'post',
+    config: RequestConfig,
     msg: 'Validate unique user register',
     data: newUserData,
     expectedResponse: {
       success: true
     },
     expectedStatus: 400,
+    debugResponse: false,
   },
   {
     url: '/user/update/{id}',
+    method: 'post',
+    config: RequestConfig,
     msg: 'Validate user update',
     data: {
       password: '123456/*'
@@ -144,9 +166,24 @@ const testData = [
       }
     },
     expectedStatus: 200,
+    debugResponse: false,
   },
-]
+  {
+    url: '/user/list',
+    method: 'get',
+    config: RequestConfig,
+    msg: 'Validate list user endpoint',
+    expectedResponse: {
+      success: true
+    },
+    expectedStatus: 200,
+    debugResponse: true,
+  },
+];
 
+const testData = EndPoints.filter(it => !!it.skip === false);
+
+const SIMPLE_METHODS = ['get', 'head', 'delete'];
 const processResult = (result, current) => {
   
   let status = 0;
@@ -179,37 +216,47 @@ const processResult = (result, current) => {
     success = expectedStatus === status;
   }
 
-
   if(success){
     console.log(chalk.green(figures.tick), current.msg);
   } else {
     console.log(chalk.red(figures.cross), current.msg, current.expectedStatus, status)
-    //console.log(current.data);
-    //console.log(data);
   }
-  //console.log(current);
-  //console.log(data);
-  //console.log('\n\n');
+
+
+  if(current.debugResponse){
+    console.log(data);
+  }
 
   if(current.postProcess){
     current.postProcess(response);
   }
 
   const step = ++httpClient.step;
+
   if(step < testData.length){
     
     const it = testData[step];
+
     if(it.preProcess){
       it.preProcess(it);
     }
-
-    httpClient
-      .post(it.url, it.data)
+  
+    if(SIMPLE_METHODS.includes(it.method)){
+      httpClient[it.method](it.url, it.config)
       .then((response) => {
         processResult(response, it);
       }).catch((error)=>{
         processResult(error, it);
       });
+    } else {
+      httpClient[it.method](it.url, it.data, it.config)
+      .then((response) => {
+        processResult(response, it);
+      }).catch((error)=>{
+        processResult(error, it);
+      });
+    }
+
   }
 
 };

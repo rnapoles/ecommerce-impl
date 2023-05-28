@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\DTO\RegisterUser;
+use App\DTO\User\RegisterUser;
 use App\Entity\User;
 use App\Entity\Group;
 use App\Usecases\User\SetupAdminUsecase;

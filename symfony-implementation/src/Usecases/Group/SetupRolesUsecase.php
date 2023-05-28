@@ -2,7 +2,7 @@
 
 namespace App\Usecases\Group;
 
-use App\DTO\RegisterUser;
+use App\DTO\User\RegisterUser;
 use App\Entity\Group;
 use App\Entity\Roles;
 use App\Repository\GroupRepository;
