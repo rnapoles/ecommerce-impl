@@ -18,6 +18,6 @@ interface IAccountService
 
   public function userExist(string $email): bool;
 
-  public function listUsers(int $startPage = 1, int $totalItems = 20): PaginateResponseObject;
+  public function listUsers(int $start = 0, int $totalItems = 20): PaginateResponseObject;
 
 }

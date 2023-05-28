@@ -2,7 +2,7 @@
 
 namespace App\Usecases\User;
 
-use App\DTO\User\PaginateRequest;
+use App\DTO\PaginateRequest;
 use App\Entity\User;
 use App\Service\AccountService;
 use App\Usecases\BaseUsecase;
@@ -21,15 +21,15 @@ class ListUsersUsecase extends BaseUsecase {
   public function execute(mixed $data): mixed
   { 
 
-    $startPage = 1;
-    $total = 10;
+    $start = 0;
+    $total = 20;
 
     if($data instanceof PaginateRequest){
-      $startPage = $data->startPage;
+      $start = $data->start;
       $total = $data->total;
     }
-  
-    return $this->accountService->listUsers($startPage, $total);
+
+    return $this->accountService->listUsers($start, $total);
   }
 
 }

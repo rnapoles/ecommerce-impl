@@ -34,7 +34,7 @@ class AccountService implements IAccountService
     return $account !== null;
   }
 
-  public function listUsers(int $startPage = 1, int $totalItems = 20): PaginateResponseObject
+  public function listUsers(int $start = 0, int $totalItems = 20): PaginateResponseObject
   {
 
     $em = $this->em;
@@ -45,7 +45,7 @@ class AccountService implements IAccountService
       ->orderBy('u.id', 'ASC')
     ;
 
-    $qb->setFirstResult($startPage);
+    $qb->setFirstResult($start);
     $qb->setMaxResults($totalItems);
 
     $query = $qb->getQuery();

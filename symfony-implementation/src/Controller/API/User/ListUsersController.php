@@ -25,7 +25,7 @@ class ListUsersController extends BaseController
         $total = (int) $request->query->get('total', 10);
 
         $dto = new PaginateRequest();
-        $dto->startPage = $start;
+        $dto->start = $start;
         $dto->total = $total;
 
         try {

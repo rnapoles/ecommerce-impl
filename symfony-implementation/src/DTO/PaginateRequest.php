@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class PaginateRequest
 {
-    public int $startPage = 0;
+    public int $start = 0;
 
     public int $total = 20;
 
