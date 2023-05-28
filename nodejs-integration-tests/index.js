@@ -203,10 +203,6 @@ const processResult = (result, current) => {
       it.preProcess(it);
     }
 
-    //console.log(`=== ${step} ===`);
-    //console.log(it);
-    //console.log(it.url);
-
     httpClient
       .post(it.url, it.data)
       .then((response) => {

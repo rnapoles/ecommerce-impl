@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Usecases;
+namespace App\Usecases\User;
 
 use App\DTO\RegisterUser;
 use App\Entity\Group;
 use App\Entity\Roles;
 use App\Repository\GroupRepository;
+use App\Usecases\BaseUsecase;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

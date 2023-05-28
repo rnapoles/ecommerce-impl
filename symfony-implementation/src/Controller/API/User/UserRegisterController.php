@@ -5,7 +5,7 @@ namespace App\Controller\API\User;
 use App\DTO\RegisterUser;
 use App\DTO\ResponseObject;
 use App\Controller\API\BaseController;
-use App\Usecases\UserRegisterUsecase;
+use App\Usecases\User\UserRegisterUsecase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;

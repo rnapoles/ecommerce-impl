@@ -4,7 +4,7 @@ namespace App\Controller\API\User;
 
 use App\DTO\ResponseObject;
 use App\Controller\API\BaseController;
-use App\Usecases\UpdateUserUsecase;
+use App\Usecases\User\UpdateUserUsecase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

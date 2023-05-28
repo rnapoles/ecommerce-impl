@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Usecases;
+namespace App\Usecases\User;
 
 use App\DTO\UpdateUser;
 use App\DTO\SimpleUpdateUser;
@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Entity\Group;
 use App\Repository\UserRepository;
 use App\Repository\GroupRepository;
+use App\Usecases\BaseUsecase;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

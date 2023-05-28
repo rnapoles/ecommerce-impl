@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Usecases;
+namespace App\Usecases\User;
 
 use App\DTO\RegisterUser;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Usecases\BaseUsecase;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
