@@ -9,7 +9,6 @@ use App\Entity\User;
 use App\Entity\Group;
 use App\Repository\UserRepository;
 use App\Repository\GroupRepository;
-use App\Usecases\User\UserRegisterUsecase;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -24,7 +23,7 @@ class AccountService
 
   }
 
-  public function userExist($email){
+  public function userExist(string $email){
     $account = $this->userRepo->findOneByEmail($email);
     
     return $account !== null;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Usecases\User;
+namespace App\Usecases\Group;
 
 use App\DTO\RegisterUser;
 use App\Entity\Group;
