@@ -2,11 +2,8 @@
 
 namespace App\Command;
 
-use App\DTO\User\RegisterUser;
-use App\Entity\User;
-use App\Entity\Group;
-use App\Usecases\User\SetupAdminUsecase;
-use App\Usecases\Group\SetupRolesUsecase;
+use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,15 +15,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 #[AsCommand(
-    name: 'app:setup-users',
-    description: 'Add a short description for your command',
+    name: 'app:populate-categories',
+    description: 'populate database with samples categories',
 )]
-class SetupUsersAndRolesCommand extends Command
+class PopulateCategoriesCommand extends Command
 {
   
     public function __construct(
-        private SetupRolesUsecase $setupRoles,      
-        private SetupAdminUsecase $setupAdmin,      
+        private CategoryRepository $categoryRepo,
     ) {
         parent::__construct();
     }
@@ -45,8 +41,23 @@ class SetupUsersAndRolesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->setupRoles->execute(null);
-        $this->setupAdmin->execute(null);
+        // todo: move to use case
+        $categories = $this->categoryRepo->findAll();
+        $count = is_countable($categories) ? count($categories) : 0;
+
+        if($count === 0){
+          for($i = 1; $i <= 11; $i++){
+            
+            $category = new Category();
+            $category->setName('Category ' . $i);
+            
+            $this->categoryRepo->save($category);
+            
+            $io->success('Created category: ' . $category);
+          }
+          
+          $this->categoryRepo->flush();
+        }
 
         return Command::SUCCESS;
     }

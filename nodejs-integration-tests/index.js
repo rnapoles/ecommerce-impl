@@ -59,7 +59,7 @@ const loginData = {
 };
 
 const newUserData = {
-  "email": faker.internet.email(),
+  "email": faker.internet.email().toLowerCase(),
   "password": "1234"
 };
 
@@ -171,7 +171,13 @@ const EndPoints = [
   {
     url: '/user/list',
     method: 'get',
-    config: RequestConfig,
+    config: {
+      ...RequestConfig,
+      params: {
+        start: 0,
+        total: 5,
+      }
+    },
     msg: 'Validate list user endpoint',
     expectedResponse: {
       success: true
