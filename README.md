@@ -12,7 +12,7 @@ An e-commerce implementation in diferent programming languages and techs
 * Todo
 
 ### Run project
-* [PHP with Symfony 6.2](symfony-implementation/README.md)
+* [PHP with Symfony 6.2](php-symfony-backend/README.md)
 
 
 ### Run integration tests
