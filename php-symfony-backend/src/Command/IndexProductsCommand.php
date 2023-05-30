@@ -2,10 +2,10 @@
 
 namespace App\Command;
 
-use App\Entity\User;
-use App\Entity\Group;
-use App\Usecases\User\SetupAdminUsecase;
-use App\Usecases\Group\SetupRolesUsecase;
+use App\Contracts\ISearchService;
+use App\Repository\ProductRepository;
+use App\DTO\Product\CreateProduct;
+use AutoMapperPlus\AutoMapperInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,19 +13,18 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
 
 #[AsCommand(
-    name: 'app:populate-users',
-    description: 'Create admin user and Roles',
+    name: 'app:index-products',
+    description: 'Add all products to search index',
 )]
-class PopulateUsersAndRolesCommand extends Command
+class IndexProductsCommand extends Command
 {
   
     public function __construct(
-        private SetupRolesUsecase $setupRoles,      
-        private SetupAdminUsecase $setupAdmin,      
+        private ProductRepository $productRepo,
+        private AutoMapperInterface $mapper,   
+        private ISearchService $searchService,   
     ) {
         parent::__construct();
     }
@@ -44,9 +43,14 @@ class PopulateUsersAndRolesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->setupRoles->execute();
-        $this->setupAdmin->execute();
-
+        $products = $this->productRepo->findAll();
+        foreach($products as $product){
+          $dto = $this->mapper->map($product, CreateProduct::class); 
+          //echo $dto->name . "\n";
+          $this->searchService->indexProduct($dto);
+        }
+        
         return Command::SUCCESS;
     }
 }
+

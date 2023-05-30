@@ -2,9 +2,10 @@
 
 namespace App\Usecases\User;
 
+use App\Contracts\IAccountService;
 use App\DTO\PaginateRequest;
+use App\DTO\PaginateResponseObject;
 use App\Entity\User;
-use App\Service\AccountService;
 use App\Usecases\BaseUsecase;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,23 +14,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ListUsersUsecase extends BaseUsecase {
   
   function __construct(
-    private AccountService $accountService,
+    private IAccountService $accountService,
   ){
 
   }
 
-  public function execute(mixed $data): mixed
+  public function execute(PaginateRequest $data): PaginateResponseObject
   { 
-
-    $start = 0;
-    $total = 20;
-
-    if($data instanceof PaginateRequest){
-      $start = $data->start;
-      $total = $data->total;
-    }
-
-    return $this->accountService->listUsers($start, $total);
+    return $this->accountService->listUsers($data->start, $data->total);
   }
 
 }

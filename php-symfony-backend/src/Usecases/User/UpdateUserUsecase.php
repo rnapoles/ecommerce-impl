@@ -4,11 +4,13 @@ namespace App\Usecases\User;
 
 use App\DTO\User\UpdateUser;
 use App\DTO\User\SimpleUpdateUser;
+use App\DTO\User\User as UserDTO;
 use App\Entity\User;
 use App\Entity\Group;
 use App\Repository\UserRepository;
 use App\Repository\GroupRepository;
 use App\Usecases\BaseUsecase;
+use AutoMapperPlus\AutoMapperInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,11 +26,12 @@ class UpdateUserUsecase extends BaseUsecase {
     private SerializerInterface  $serializer,
     private ValidatorInterface $validator,
     private UserPasswordHasherInterface $passwordEncoder,
+    private AutoMapperInterface $mapper,
   ){
     parent::__construct($validator);
   }
 
-  public function execute(mixed $data): mixed 
+  public function execute(string $data): ?UserDTO 
   {
 
     $dto = $this->serializer->deserialize($data, UpdateUser::class, 'json');
@@ -56,8 +59,9 @@ class UpdateUserUsecase extends BaseUsecase {
 
     $this->validate($user);
     $this->userRepo->save($user, true);
-    
-    return $user;
+    $dto = $this->mapper->map($user, UserDTO::class); 
+
+    return $dto;
   }
 
 }

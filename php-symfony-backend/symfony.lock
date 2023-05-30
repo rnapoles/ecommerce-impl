@@ -47,6 +47,9 @@
             "./migrations/.gitignore"
         ]
     },
+    "jane-php/automapper-bundle": {
+        "version": "v7.5.0"
+    },
     "lexik/jwt-authentication-bundle": {
         "version": "2.18",
         "recipe": {
@@ -58,6 +61,9 @@
         "files": [
             "./config/packages/lexik_jwt_authentication.yaml"
         ]
+    },
+    "mark-gerarts/automapper-plus-bundle": {
+        "version": "1.4.1"
     },
     "nelmio/cors-bundle": {
         "version": "2.3",

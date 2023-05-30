@@ -17,6 +17,7 @@
     "cli-table": "^0.3.11",
     "faker": "5.5.3",
     "inquirer": "^9.2.6",
-    "jsonschema": "^1.4.1"
+    "jsonschema": "^1.4.1",
+    "uuid": "^9.0.0"
   }
 }

@@ -1,49 +1,33 @@
 <?php
 
-namespace App\Controller\API\User;
+namespace App\Controller\API\Product;
 
 use App\DTO\ResponseObject;
 use App\Controller\API\BaseController;
-use App\Usecases\User\UpdateUserUsecase;
+use App\Usecases\Product\DeleteProductUsecase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class UpdateUserController extends BaseController
+class DeleteProductController extends BaseController
 {
-    #[IsGranted('ROLE_ADMIN')]
+    #[Security("is_granted('ROLE_ADMIN') OR is_granted('ROLE_EDITOR')")]
     #[Route(
-      '/api/user/update/{id}',
-      name: 'api_user_update',
-      methods: ['PATCH'],
+      '/api/product/delete/{id}',
+      name: 'api_product_delete',
+      methods: ['DELETE'],
       requirements: ['id' => '\d+']
     )]
-    public function index(
-      Request $request,
-      UpdateUserUsecase $updateUser,
-    ): JsonResponse
+    public function index(int $id, DeleteProductUsecase $useCase): JsonResponse
     {
       
         $responseObj = new ResponseObject();
 
         try {
-
-          $result = $updateUser->execute($request->getContent());
-          if(!$result){
-            throw $this->createNotFoundException(
-                'User not found'
-            );
-          }
-          
-          $responseObj->payload = $result;
-          
+          $useCase->execute($id);
         } catch (\Exception $ex){
 
             $this->processException($ex, $responseObj);
@@ -62,7 +46,6 @@ class UpdateUserController extends BaseController
             return $jsonResponse;
         }
 
-
-        return $this->json($responseObj);
+        return $this->json($responseObj, JsonResponse::HTTP_OK);
     }
 }

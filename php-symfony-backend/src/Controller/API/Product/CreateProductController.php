@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Controller\API\User;
+namespace App\Controller\API\Product;
 
-use App\DTO\User\RegisterUser;
 use App\DTO\ResponseObject;
 use App\Controller\API\BaseController;
-use App\Usecases\User\UserRegisterUsecase;
+use App\Usecases\Product\CreateProductUsecase;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 
-class UserRegisterController extends BaseController
+class CreateProductController extends BaseController
 {
-    #[Route('/api/user/register', name: 'api_user_register', methods: ['POST'])]
-    public function index(Request $request, UserRegisterUsecase $registerUser): JsonResponse
+    #[Security("is_granted('ROLE_ADMIN') OR is_granted('ROLE_EDITOR')")]
+    #[Route('/api/product/create', name: 'api_product_create', methods: ['POST'])]
+    public function index(Request $request, CreateProductUsecase $useCase): JsonResponse
     {
       
         $responseObj = new ResponseObject();
 
         try {
-          $responseObj->payload = $registerUser->execute($request->getContent());
+          $responseObj->payload = $useCase->execute($request->getContent());
         } catch (\Exception $ex){
 
             $this->processException($ex, $responseObj);

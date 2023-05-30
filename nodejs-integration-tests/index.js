@@ -6,6 +6,7 @@ import cliProgress from 'cli-progress';
 import colors from 'ansi-colors';
 import Table from 'cli-table';
 import faker from 'faker';
+import Utils from './utils.js';
 
 
 //const axios = require('axios');
@@ -130,8 +131,9 @@ const EndPoints = [
     expectedResponse: {
       success: true
     },
-    expectedStatus: 200,
+    expectedStatus: 201,
     debugResponse: false,
+    skip: false,
   },
   {
     url: '/user/register',
@@ -144,10 +146,11 @@ const EndPoints = [
     },
     expectedStatus: 400,
     debugResponse: false,
+    skip: false,
   },
   {
     url: '/user/update/{id}',
-    method: 'post',
+    method: 'patch',
     config: RequestConfig,
     msg: 'Validate user update',
     data: {
@@ -167,6 +170,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
+    skip: false,
   },
   {
     url: '/user/list',
@@ -183,7 +187,96 @@ const EndPoints = [
       success: true
     },
     expectedStatus: 200,
-    debugResponse: true,
+    debugResponse: false,
+    skip: false,
+  },
+  {
+    url: '/product/create',
+    method: 'post',
+    data: Utils.generateFakeProduct(),
+    msg: 'Validate create product endpoint',
+    expectedResponse: {
+      success: true
+    },
+    postProcess: (response) => {
+      const data = response.data;
+      if(data.success){
+        shareData.product = data.payload;
+      }
+    },
+    expectedStatus: 201,
+    debugResponse: false,
+    skip: false,
+  },
+  {
+    url: '/product/{sku}',
+    method: 'get',
+    msg: 'Validate read product endpoint',
+    expectedResponse: {
+      success: true
+    },
+    preProcess: (self) => {
+      const product = shareData.product;
+      if(product){
+        self.url = self.url.replace('{sku}', product.sku);
+      }
+    },
+    expectedStatus: 200,
+    debugResponse: false,
+    skip: false,
+  },
+  {
+    url: '/product/update/{id}',
+    method: 'patch',
+    msg: 'Validate update product endpoint',
+    expectedResponse: {
+      success: true
+    },
+    preProcess: (self) => {
+      const product = shareData.product;
+      if(product){
+        self.url = self.url.replace('{id}', product.id);
+        self.data = product;
+      }
+    },
+    expectedStatus: 200,
+    debugResponse: false,
+    skip: false,
+  },
+  {
+    url: '/product/search',
+    method: 'get',
+    config: {
+      ...RequestConfig,
+      params: {
+        query: 'valoration = 5'
+      }
+    },
+    msg: 'Validate search products endpoint',
+    expectedResponse: {
+      success: true
+    },
+    expectedStatus: 201,
+    debugResponse: false,
+    skip: false,
+  },
+  {
+    url: '/product/delete/{id}',
+    method: 'delete',
+    msg: 'Validate delete product endpoint',
+    preProcess: (self) => {
+      const product = shareData.product;
+      if(product){
+        self.url = self.url.replace('{id}', product.id);
+        self.data = product;
+      }
+    },
+    expectedResponse: {
+      success: true
+    },
+    expectedStatus: 200,
+    debugResponse: false,
+    skip: false,
   },
 ];
 

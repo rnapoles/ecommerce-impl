@@ -3,5 +3,5 @@
 namespace App\Usecases;
 
 interface IUsecase {
-  function execute(mixed $data): mixed;
+  //function execute(mixed $data): mixed;
 }

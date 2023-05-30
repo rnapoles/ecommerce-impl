@@ -1,49 +1,43 @@
 <?php
 
-namespace App\Controller\API\User;
+namespace App\Controller\API\Product;
 
 use App\DTO\ResponseObject;
 use App\Controller\API\BaseController;
-use App\Usecases\User\UpdateUserUsecase;
+use App\Usecases\Product\UpdateProductUsecase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class UpdateUserController extends BaseController
+class UpdateProductController extends BaseController
 {
-    #[IsGranted('ROLE_ADMIN')]
+    #[Security("is_granted('ROLE_ADMIN') OR is_granted('ROLE_EDITOR')")]
     #[Route(
-      '/api/user/update/{id}',
-      name: 'api_user_update',
+      '/api/product/update/{id}',
+      name: 'api_product_update',
       methods: ['PATCH'],
       requirements: ['id' => '\d+']
     )]
-    public function index(
-      Request $request,
-      UpdateUserUsecase $updateUser,
-    ): JsonResponse
+    public function index(Request $request, UpdateProductUsecase $useCase): JsonResponse
     {
       
         $responseObj = new ResponseObject();
 
         try {
 
-          $result = $updateUser->execute($request->getContent());
+          $result = $useCase->execute($request->getContent());
+
           if(!$result){
             throw $this->createNotFoundException(
-                'User not found'
+                'Product not found'
             );
           }
           
           $responseObj->payload = $result;
-          
+
         } catch (\Exception $ex){
 
             $this->processException($ex, $responseObj);
@@ -62,7 +56,6 @@ class UpdateUserController extends BaseController
             return $jsonResponse;
         }
 
-
-        return $this->json($responseObj);
+        return $this->json($responseObj, JsonResponse::HTTP_OK);
     }
 }

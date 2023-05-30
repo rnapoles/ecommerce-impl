@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * Product
@@ -120,6 +121,7 @@ class Product implements \Stringable {
   /**
    * Sale
   */
+  #[Ignore]
   #[ORM\OneToMany(targetEntity: "Sale", mappedBy: "product", fetch: "LAZY", cascade: ["persist", "remove"])]
   protected Collection $sales;
 
@@ -129,7 +131,7 @@ class Product implements \Stringable {
   */
   #[ORM\Version]
   #[ORM\Column(type: 'datetime', name: 'lock_version')]
-  protected \DateTime $lockVersion;
+  public \DateTime $lockVersion;
 
   /**
    * Product Constructor

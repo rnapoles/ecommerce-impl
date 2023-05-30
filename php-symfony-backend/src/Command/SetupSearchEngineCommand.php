@@ -2,10 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\User;
-use App\Entity\Group;
-use App\Usecases\User\SetupAdminUsecase;
-use App\Usecases\Group\SetupRolesUsecase;
+use App\Contracts\ISearchService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,19 +10,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
 
 #[AsCommand(
-    name: 'app:populate-users',
+    name: 'app:setup-search-engine',
     description: 'Create admin user and Roles',
 )]
-class PopulateUsersAndRolesCommand extends Command
+class SetupSearchEngineCommand extends Command
 {
   
     public function __construct(
-        private SetupRolesUsecase $setupRoles,      
-        private SetupAdminUsecase $setupAdmin,      
+        private ISearchService $searchService,    
     ) {
         parent::__construct();
     }
@@ -44,8 +38,7 @@ class PopulateUsersAndRolesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->setupRoles->execute();
-        $this->setupAdmin->execute();
+        $this->searchService->setup();
 
         return Command::SUCCESS;
     }
