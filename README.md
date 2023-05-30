@@ -1,5 +1,6 @@
 # ecommerce-impl
-An e-commerce implementation in diferent programming languages and techs
+A simple e-commerce implementation in diferent programming languages and techs.
+Using a Clean Architecture.
 
 
 ### Data model
@@ -16,7 +17,6 @@ An e-commerce implementation in diferent programming languages and techs
 
 
 ### Run integration tests
-
 ```
 cd nodejs-integration-tests
 yarn
