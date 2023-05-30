@@ -5,7 +5,7 @@
 * install PHP 8.1
 * [install Composer](https://getcomposer.org/doc/00-intro.md)
 * [install Symfony CLI](https://symfony.com/download)
-* install Mysql
+* install Mysql, Postgresql or Sqlite
 * [install Rabbitmq](https://www.rabbitmq.com/download.html)
 * [install Meilisearch](https://www.meilisearch.com/docs/learn/getting_started/installation)
 * [install Redis](https://redis.io/docs/getting-started/installation/)
@@ -25,10 +25,24 @@ apt install php8.1-{amqp,ast,bcmath,bz2,calendar,ctype,decimal,dev,dom,exif,ffi,
 * Todo
 
 ## Run Project
+
 ```
 cd php-symfony-backend
-composer update
+```
+
+Edit .env:
+
+```
+DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+SEARCH_ENGINE_DSN=http://127.0.0.1:7700
+# MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
+```
+
+```
 symfony check:requirements
+composer update
 php bin\console doctrine:schema:update --force
 php bin\console app:setup-search-engine
 php bin\console app:populate-users
@@ -40,7 +54,12 @@ symfony serve --port=12000
 
 ## Test endpoints
 
+* To see endpoints:
+```sh
+php bin\console debug:router
 ```
+
+```sh
 cd nodejs-integration-tests
 yarn
 yarn start
