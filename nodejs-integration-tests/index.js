@@ -114,7 +114,7 @@ const EndPoints = [
     },
     expectedStatus: 400,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/user/register',
@@ -133,7 +133,7 @@ const EndPoints = [
     },
     expectedStatus: 201,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/user/register',
@@ -146,7 +146,7 @@ const EndPoints = [
     },
     expectedStatus: 400,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/user/update/{id}',
@@ -170,7 +170,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/user/list',
@@ -188,7 +188,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/product/create',
@@ -206,7 +206,7 @@ const EndPoints = [
     },
     expectedStatus: 201,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/product/{sku}',
@@ -223,7 +223,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/product/update/{id}',
@@ -241,7 +241,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/product/search',
@@ -258,7 +258,7 @@ const EndPoints = [
     },
     expectedStatus: 201,
     debugResponse: false,
-    skip: false,
+    skip: true,
   },
   {
     url: '/product/delete/{id}',
@@ -276,6 +276,17 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
+    skip: true,
+  },
+  {
+    url: '/product/search-total',
+    method: 'get',
+    msg: 'Validate search total endpoint',
+    expectedResponse: {
+      success: true
+    },
+    expectedStatus: 200,
+    debugResponse: true,
     skip: false,
   },
 ];

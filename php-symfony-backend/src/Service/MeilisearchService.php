@@ -64,7 +64,7 @@ class MeilisearchService implements ISearchService
 
   public function down(): void
   {
-    $client->deleteIndex($this->indexName);
+    $this->client->deleteIndex($this->indexName);
   }
 
   public function indexProduct(CreateProduct $product): void
@@ -157,7 +157,7 @@ class MeilisearchService implements ISearchService
       $response = $this->client->index($this->indexName)->fetchRawInfo();
       
       return true;
-    } catch (\ApiException $ex){
+    } catch (ApiException $ex){
       if($ex->getCode() === 404){
         return false;
       } else {

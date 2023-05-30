@@ -43,6 +43,12 @@ class IndexProductsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        /*
+        $this->searchService->down();
+        sleep(5);
+        $this->searchService->setup();          
+        */
+
         $products = $this->productRepo->findAll();
         foreach($products as $product){
           $dto = $this->mapper->map($product, CreateProduct::class); 

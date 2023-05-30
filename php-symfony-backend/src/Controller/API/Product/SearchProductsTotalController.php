@@ -3,6 +3,7 @@
 namespace App\Controller\API\Product;
 
 use App\DTO\ResponseObject;
+use App\DTO\Product\ResponseSearchTotal;
 use App\DTO\PaginateRequest;
 use App\Controller\API\BaseController;
 use App\Usecases\Product\SearchProductsUsecase;
@@ -13,11 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 
-class SearchProductController extends BaseController
+class SearchProductsTotalController extends BaseController
 {
 
-    #[Route('/api/product/search', 
-      name: 'api_product_search',
+    #[Route('/api/product/search-total',
+      name: 'api_product_search_total',
       priority: 1,
       methods: ['GET']
     )]
@@ -25,17 +26,18 @@ class SearchProductController extends BaseController
     {
       
         $responseObj = new ResponseObject();
-        $start = (int) $request->query->get('start', 0);
-        $total = (int) $request->query->get('total', 10);
-        $query = $request->query->get('query', 10);
+        $query = $request->query->get('query', '');
 
         $dto = new PaginateRequest();
-        $dto->start = $start;
-        $dto->total = $total;
+        $dto->start = 0;
+        $dto->total = 10;
         $dto->query = $query;
 
         try {
-          $responseObj = $useCase->execute($dto);
+          $result = $useCase->execute($dto);
+          $payload = new ResponseSearchTotal();
+          $payload->total = $result->total;
+          $responseObj->payload = $payload;
         } catch (\Exception $ex){
 
             $this->processException($ex, $responseObj);
@@ -49,6 +51,6 @@ class SearchProductController extends BaseController
             return $jsonResponse;
         }
 
-        return $this->json($responseObj, JsonResponse::HTTP_CREATED);
+        return $this->json($responseObj, JsonResponse::HTTP_OK);
     }
 }
