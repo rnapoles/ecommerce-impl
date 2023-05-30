@@ -367,6 +367,17 @@ const EndPoints = [
     },
     expectedStatus: 201,
     debugResponse: true,
+    skip: true,
+  },
+  {
+    msg: 'Validate list sold products endpoint',
+    url: '/sale/list-products',
+    method: 'get',
+    expectedResponse: {
+      success: true
+    },
+    expectedStatus: 200,
+    debugResponse: true,
     skip: false,
   },
 ];
@@ -380,6 +391,7 @@ const processResult = (result, current) => {
   let status = 0;
   let data = {};
   let response = result;
+  let message = null;
 
   if(result instanceof Error){
 
@@ -389,11 +401,13 @@ const processResult = (result, current) => {
     if (response) {
       status = response.status;
       data = response.data;
+      message = data?.message;
     } else if (request) {
       //('Network Error');
     } else {
       //(error.message);
     }
+
   } else {
       status = result.status;
       data = result.data;
@@ -412,6 +426,9 @@ const processResult = (result, current) => {
     console.log(chalk.red(figures.cross), current.msg, current.expectedStatus, status)
   }
 
+  if(message){
+    console.log(`\t${message}`);
+  }
 
   if(current.debugResponse){
     console.log(data);

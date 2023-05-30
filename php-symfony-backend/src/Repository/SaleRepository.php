@@ -22,4 +22,18 @@ class SaleRepository extends ServiceEntityRepository
   {
     parent::__construct($registry, Sale::class);
   }
+  
+  public function listSoldProducts(): array 
+  {
+
+    $class = Sale::class;
+    $dql = 'SELECT ';
+    $dql .= 'p.id, p.name, p.price, p.unitsInStock,';
+    $dql .= 'c.name, p.description, p.aditionalInfo, ';
+    $dql .= 'p.sku, p.valoration, p.tags, p.images ';
+    $dql .= "FROM $class s JOIN s.product p JOIN p.category c";
+    $query = $this->getEntityManager()->createQuery($dql);
+
+    return $query->getResult();
+  }
 }

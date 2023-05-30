@@ -11,6 +11,7 @@ use App\DTO\Product\CreateProduct;
 use AutoMapperPlus\AutoMapperPlusBundle\AutoMapperConfiguratorInterface;
 use AutoMapperPlus\Configuration\AutoMapperConfigInterface;
 use AutoMapperPlus\MappingOperation\Operation;
+use AutoMapperPlus\DataType;
 
 class AutoMapperConfig implements AutoMapperConfiguratorInterface
 {
@@ -20,5 +21,6 @@ class AutoMapperConfig implements AutoMapperConfiguratorInterface
         ->forMember('password', Operation::ignore());
       ;
       $config->registerMapping(Product::class, CreateProduct::class);
+      $config->registerMapping(DataType::ARRAY, CreateProduct::class);
     }
 }

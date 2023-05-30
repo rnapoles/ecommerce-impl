@@ -53,7 +53,7 @@ class CreateSaleUsecase extends BaseUsecase {
     }
 
     if(!$product->isAvailable()){
-      throw new ApiException("Product is not available");
+      throw new ApiException("Product out of stock");
     }
 
     $sale = new Sale();
