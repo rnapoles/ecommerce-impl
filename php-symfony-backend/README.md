@@ -28,6 +28,7 @@ apt install php8.2-{amqp,ast,bcmath,bz2,calendar,ctype,decimal,dev,dom,exif,ffi,
 ```
 cd php-symfony-backend
 composer update
+symfony check:requirements
 php bin\console doctrine:schema:update --force
 php bin\console app:setup-search-engine
 php bin\console app:populate-users
