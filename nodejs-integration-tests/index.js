@@ -366,7 +366,7 @@ const EndPoints = [
       }
     },
     expectedStatus: 201,
-    debugResponse: true,
+    debugResponse: false,
     skip: true,
   },
   {
@@ -377,7 +377,18 @@ const EndPoints = [
       success: true
     },
     expectedStatus: 200,
-    debugResponse: true,
+    debugResponse: false,
+    skip: false,
+  },
+  {
+    msg: 'Validate sales profit calc endpoint',
+    url: '/sale/calc-profit',
+    method: 'get',
+    expectedResponse: {
+      success: true
+    },
+    expectedStatus: 200,
+    debugResponse: false,
     skip: false,
   },
 ];

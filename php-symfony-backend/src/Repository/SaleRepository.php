@@ -23,6 +23,15 @@ class SaleRepository extends ServiceEntityRepository
     parent::__construct($registry, Sale::class);
   }
   
+  public function calcProfit(): float
+  {
+    $class = Sale::class;
+    $dql = "SELECT SUM(s.price) as profit FROM $class s";
+    $query = $this->getEntityManager()->createQuery($dql);
+
+    return $query->getSingleResult()['profit'];
+  }
+
   public function listSoldProducts(): array 
   {
 
