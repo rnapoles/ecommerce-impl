@@ -36,7 +36,7 @@ class Sale implements \Stringable {
    * Product
   */
   #[ORM\ManyToOne(targetEntity: "Product", inversedBy: "sales", fetch: "EAGER")]
-  protected Product $product;
+  protected ?Product $product;
 
   /**
    * User

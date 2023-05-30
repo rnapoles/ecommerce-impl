@@ -49,6 +49,6 @@ class SearchProductController extends BaseController
             return $jsonResponse;
         }
 
-        return $this->json($responseObj, JsonResponse::HTTP_CREATED);
+        return $this->json($responseObj, JsonResponse::HTTP_OK);
     }
 }

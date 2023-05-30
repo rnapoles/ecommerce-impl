@@ -446,6 +446,28 @@ class Product implements \Stringable {
   }
 
   /**
+   * Reduce product quantity in stock
+   *
+   * @return void
+  */
+  public function reduceStock(): void 
+  {
+    if($this->unitsInStock){
+      $this->unitsInStock--;
+    }
+  }
+
+  /**
+   * Check if product is available
+   *
+   * @return bool
+  */
+  public function isAvailable(): bool 
+  {
+    return $this->unitsInStock > 0;
+  }
+
+  /**
    * toJson()
    * @return string
   */

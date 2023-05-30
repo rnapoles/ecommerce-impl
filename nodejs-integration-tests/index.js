@@ -8,6 +8,7 @@ import Table from 'cli-table';
 import faker from 'faker';
 import Utils from './utils.js';
 
+const randomElement = faker.random.arrayElement;
 
 //const axios = require('axios');
 //const figures = require('figures');
@@ -64,7 +65,12 @@ const newUserData = {
   "password": "1234"
 };
 
-const shareData = {};
+const shareData = {
+  auth: null,
+  user: null,
+  product: null,
+  products: [],
+};
 
 const RequestConfig = {
   headers: {
@@ -74,10 +80,10 @@ const RequestConfig = {
 
 const EndPoints = [
   {
+    msg: 'Check login',
     url: '/login',
     method: 'post',
     config: RequestConfig,
-    msg: 'Check login',
     data: loginData,
     expectedResponse: {
       token: true
@@ -94,17 +100,37 @@ const EndPoints = [
       }
       
       const jwt = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+
       let expire = dateDiffString(new Date(jwt.exp * 1000), new Date()) ;
       console.log(chalk.green(figures.tick), `Token expire in ${expire}`);
     },
     expectedStatus: 200,
     debugResponse: false,
+    skip: false,
   },
   {
+    msg: 'Validate load auth user info json',
+    url: '/user',
+    method: 'get',
+    config: RequestConfig,
+    data: loginData,
+    expectedResponse: {
+      success: false
+    },
+    postProcess: (response) => {
+      if(response){
+        shareData.auth = response.data.payload;
+      }
+    },
+    expectedStatus: 200,
+    debugResponse: false,
+    skip: false,
+  },
+  {
+    msg: 'Validate invalid user register json',
     url: '/user/register',
     method: 'post',
     config: RequestConfig,
-    msg: 'Validate invalid user register json',
     data: loginData,
     expectedResponse: {
       success: false
@@ -117,10 +143,10 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate user register',
     url: '/user/register',
     method: 'post',
     config: RequestConfig,
-    msg: 'Validate user register',
     data: newUserData,
     postProcess: (response) => {
       const data = response.data;
@@ -136,10 +162,10 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate unique user register',
     url: '/user/register',
     method: 'post',
     config: RequestConfig,
-    msg: 'Validate unique user register',
     data: newUserData,
     expectedResponse: {
       success: true
@@ -149,10 +175,10 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate user update',
     url: '/user/update/{id}',
     method: 'patch',
     config: RequestConfig,
-    msg: 'Validate user update',
     data: {
       password: '123456/*'
     },
@@ -173,6 +199,7 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate list user endpoint',
     url: '/user/list',
     method: 'get',
     config: {
@@ -182,7 +209,6 @@ const EndPoints = [
         total: 5,
       }
     },
-    msg: 'Validate list user endpoint',
     expectedResponse: {
       success: true
     },
@@ -191,10 +217,10 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate create product endpoint',
     url: '/product/create',
     method: 'post',
     data: Utils.generateFakeProduct(),
-    msg: 'Validate create product endpoint',
     expectedResponse: {
       success: true
     },
@@ -209,9 +235,9 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate read product endpoint',
     url: '/product/{sku}',
     method: 'get',
-    msg: 'Validate read product endpoint',
     expectedResponse: {
       success: true
     },
@@ -226,9 +252,9 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate update product endpoint',
     url: '/product/update/{id}',
     method: 'patch',
-    msg: 'Validate update product endpoint',
     expectedResponse: {
       success: true
     },
@@ -244,6 +270,7 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate search products endpoint',
     url: '/product/search',
     method: 'get',
     config: {
@@ -252,18 +279,28 @@ const EndPoints = [
         query: 'valoration = 5'
       }
     },
-    msg: 'Validate search products endpoint',
+    postProcess: (response) => {
+      
+      if(!response){
+        return;
+      }
+      
+      const data = response.data;
+      if(data.success){
+        shareData.products = data.payload;
+      }
+    },
     expectedResponse: {
       success: true
     },
-    expectedStatus: 201,
+    expectedStatus: 200,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
+    msg: 'Validate delete product endpoint',
     url: '/product/delete/{id}',
     method: 'delete',
-    msg: 'Validate delete product endpoint',
     preProcess: (self) => {
       const product = shareData.product;
       if(product){
@@ -279,13 +316,56 @@ const EndPoints = [
     skip: true,
   },
   {
+    msg: 'Validate search total endpoint',
     url: '/product/search-total',
     method: 'get',
-    msg: 'Validate search total endpoint',
+    config: {
+      ...RequestConfig,
+      params: {
+        query: 'valoration = 5'
+      }
+    },
     expectedResponse: {
       success: true
     },
     expectedStatus: 200,
+    debugResponse: false,
+    skip: true,
+  },
+  {
+    msg: 'Validate sale product endpoint',
+    url: '/sale/create',
+    method: 'post',
+    expectedResponse: {
+      success: true
+    },
+    preProcess: (self) => {
+
+      const products = shareData.products;
+      const user = shareData.auth;
+      console.log(user)
+
+      let product = null;
+      let c = products.length;
+
+      while(c--){
+        product = randomElement(products);
+        if(product.unitsInStock){
+          break;
+        }
+      }
+      
+      if(product){
+        self.data = {
+          productId: product.id,
+          userId: user.id,
+        };
+      } else {
+        self.skip = true;
+        console.log(chalk.red(figures.cross), self.msg, 'skip');
+      }
+    },
+    expectedStatus: 201,
     debugResponse: true,
     skip: false,
   },
@@ -296,6 +376,7 @@ const testData = EndPoints.filter(it => !!it.skip === false);
 const SIMPLE_METHODS = ['get', 'head', 'delete'];
 const processResult = (result, current) => {
   
+  console.log('===>', current.url);
   let status = 0;
   let data = {};
   let response = result;
@@ -313,7 +394,6 @@ const processResult = (result, current) => {
     } else {
       //(error.message);
     }
-
   } else {
       status = result.status;
       data = result.data;
@@ -344,7 +424,7 @@ const processResult = (result, current) => {
   const step = ++httpClient.step;
 
   if(step < testData.length){
-    
+
     const it = testData[step];
 
     if(it.preProcess){
