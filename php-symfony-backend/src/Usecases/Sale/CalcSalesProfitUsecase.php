@@ -26,7 +26,7 @@ class CalcSalesProfitUsecase extends BaseUsecase {
     $profit = $this->saleRepo->calcProfit();
     $dto = new TotalProfitResponse();
     $dto->profit = $profit;
-    
+
     return $dto;
   }
 

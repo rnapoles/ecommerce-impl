@@ -140,7 +140,7 @@ const EndPoints = [
     },
     expectedStatus: 400,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate user register',
@@ -159,7 +159,7 @@ const EndPoints = [
     },
     expectedStatus: 201,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate unique user register',
@@ -172,7 +172,7 @@ const EndPoints = [
     },
     expectedStatus: 400,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate user update',
@@ -196,7 +196,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate list user endpoint',
@@ -214,7 +214,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate create product endpoint',
@@ -232,7 +232,7 @@ const EndPoints = [
     },
     expectedStatus: 201,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate read product endpoint',
@@ -249,7 +249,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate update product endpoint',
@@ -267,7 +267,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate search products endpoint',
@@ -313,7 +313,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate search total endpoint',
@@ -330,7 +330,7 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate sale product endpoint',
@@ -343,7 +343,6 @@ const EndPoints = [
 
       const products = shareData.products;
       const user = shareData.auth;
-      console.log(user)
 
       let product = null;
       let c = products.length;
@@ -367,7 +366,7 @@ const EndPoints = [
     },
     expectedStatus: 201,
     debugResponse: false,
-    skip: true,
+    skip: false,
   },
   {
     msg: 'Validate list sold products endpoint',
@@ -389,6 +388,17 @@ const EndPoints = [
     },
     expectedStatus: 200,
     debugResponse: false,
+    skip: false,
+  },
+  {
+    msg: 'Validate list products out of stock endpoint',
+    url: '/product/out-stock',
+    method: 'get',
+    expectedResponse: {
+      success: true
+    },
+    expectedStatus: 200,
+    debugResponse: true,
     skip: false,
   },
 ];

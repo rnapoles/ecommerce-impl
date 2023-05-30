@@ -22,4 +22,12 @@ class ProductRepository extends ServiceEntityRepository
   {
     parent::__construct($registry, Product::class);
   }
+  
+  public function listOutStock(): array 
+  {
+
+    $products = $this->findByUnitsInStock(0);
+
+    return $products;
+  }
 }
