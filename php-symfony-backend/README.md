@@ -49,7 +49,8 @@ yarn start
 * implement a CRUD for Category entity
 * implement a CRUD for Group entity
 * finalize a CRUD implementation for User entity
+* add swagger ui to project
 * use a message queue when create, update or delete a Product to index task in another process 
 * implement a recomendation engine to suggest products to user
 * implement a prediction engine for sales
-* use redis as cache for some statistic
+* use redis as cache for some statistics

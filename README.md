@@ -1,6 +1,6 @@
 # ecommerce-impl
-A simple e-commerce implementation in diferent programming languages and techs.
-Using a Clean Architecture.
+A simple e-commerce project exercise implementation in diferent 
+programming languages and techs. Using a Clean Architecture.
 
 
 ### Data model
