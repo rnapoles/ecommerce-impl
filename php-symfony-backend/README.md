@@ -2,7 +2,7 @@
 
 ## Run project in dev mode
 
-* install PHP 8.2
+* install PHP 8.1
 * [install Composer](https://getcomposer.org/doc/00-intro.md)
 * [install Symfony CLI](https://symfony.com/download)
 * install Mysql
@@ -15,7 +15,7 @@
 * install require php extensions
 
 ```sh
-apt install php8.2-{amqp,ast,bcmath,bz2,calendar,ctype,decimal,dev,dom,exif,ffi,fileinfo,gd,gettext,gmagick,http,iconv,imagick,intl,json,ldap,mbstring,mcrypt,memcache,memcached,mongodb,mysql,mysqli,mysqlnd,opcache,pdo,pdo-mysql,pdo-pgsql,pdo-sqlite,phar,posix,redis,simplexml,sockets,sqlite3,tidy,tokenizer,uuid,xmlreader,xmlwriter,xsl,yaml,zip}
+apt install php8.1-{amqp,ast,bcmath,bz2,calendar,ctype,decimal,dev,dom,exif,ffi,fileinfo,gd,gettext,gmagick,http,iconv,imagick,intl,json,ldap,mbstring,mcrypt,memcache,memcached,mongodb,mysql,mysqli,mysqlnd,opcache,pdo,pdo-mysql,pdo-pgsql,pdo-sqlite,phar,posix,redis,simplexml,sockets,sqlite3,tidy,tokenizer,uuid,xmlreader,xmlwriter,xsl,yaml,zip}
 ```
 
 ## Windows
