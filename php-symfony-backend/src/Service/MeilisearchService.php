@@ -9,6 +9,7 @@ use App\DTO\PaginateResponseObject;
 use App\DTO\Product\CreateProduct;
 use Meilisearch\Client;
 use Meilisearch\Exceptions\ApiException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MeilisearchService implements ISearchService
 {
@@ -28,8 +29,11 @@ class MeilisearchService implements ISearchService
     'category', 'price'
   ];
 
-  function __construct(){
-    $this->client = new Client('http://127.0.0.1:9700');
+  function __construct(
+    private ParameterBagInterface $params
+  ){
+    $url = $this->params->get('search_engine_dsn');
+    $this->client = new Client($url);
   }
 
   public function setup(): void

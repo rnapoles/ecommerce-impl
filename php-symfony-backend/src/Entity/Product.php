@@ -53,7 +53,7 @@ class Product implements \Stringable {
    @var float
    *
    */
-  #[ORM\Column(type: "decimal", name: "price", precision: 17, scale: 17, nullable: false, unique: false)]
+  #[ORM\Column(type: "decimal", name: "price", precision: 10, scale: 2, nullable: false, unique: false)]
   protected float $price;
 
   /**

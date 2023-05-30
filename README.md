@@ -9,7 +9,7 @@ An e-commerce implementation in diferent programming languages and techs
 * Todo
 
 ### System design
-* Todo
+![Screenshot of ecommerce](media/symfony-system-design.png)
 
 ### Run project
 * [PHP with Symfony 6.2](php-symfony-backend/README.md)

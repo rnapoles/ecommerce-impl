@@ -21,7 +21,7 @@ class SetupRolesUsecase extends BaseUsecase {
     parent::__construct($validator);
   }
 
-  public function execute(mixed $data): mixed
+  public function execute(): mixed
   {
 
     $groupRepo = $this->groupRepo;
