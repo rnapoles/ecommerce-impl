@@ -59,6 +59,7 @@ symfony serve --port=12000
 php bin\console debug:router
 ```
 
+* Run tests:
 ```sh
 cd nodejs-integration-tests
 yarn
@@ -68,7 +69,7 @@ yarn start
 ## Todo
 * implement a CRUD for Category entity
 * implement a CRUD for Group entity
-* finalize a CRUD implementation for User entity
+* finalize the CRUD implementation of User entity
 * add swagger ui to project
 * use a message queue when create, update or delete a Product to index task in another process 
 * implement a recomendation engine to suggest products to user
