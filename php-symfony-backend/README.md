@@ -70,7 +70,7 @@ yarn start
 * implement a CRUD for Category entity
 * implement a CRUD for Group entity
 * finalize the CRUD implementation of User entity
-* add swagger ui to project
+* add swagger-ui to project
 * use a message queue when create, update or delete a Product to index task in another process 
 * implement a recomendation engine to suggest products to user
 * implement a prediction engine for sales

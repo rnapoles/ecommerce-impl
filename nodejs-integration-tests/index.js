@@ -149,6 +149,9 @@ const EndPoints = [
     config: RequestConfig,
     data: newUserData,
     postProcess: (response) => {
+      
+      if(!response) return;
+      
       const data = response.data;
       if(data.success){
         shareData.user = data.payload;
@@ -225,6 +228,9 @@ const EndPoints = [
       success: true
     },
     postProcess: (response) => {
+
+      if(!response) return;
+
       const data = response.data;
       if(data.success){
         shareData.product = data.payload;
