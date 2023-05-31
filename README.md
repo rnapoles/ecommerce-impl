@@ -29,10 +29,10 @@ programming languages and techs. Using a Clean Architecture.
 | POST	   | /api/sale/create	  | User	 | Sale a product                                 |
 | GET	   | /api/sale/list-products	  | User	 | List all products that has been sale           |             
 | GET	   | /api/sale/calc-profit	  | Editor or Admin	 | Get the profit of sales                        |
-| GET	   | /api/user/list	  | Admin	 | Get the use list                               |
-| PATCH	   | /api/user/update/{id}	  | Admin	 | Update a user                                  |
-| GET	   | /api/user	  | User	 | Get user info using the JWT token              |          
 | POST	   | /api/user/register	  | Anonymous	 | Register a new user                            |
+| GET	   | /api/user	  | User	 | Get user info using the JWT token              |          
+| PATCH	   | /api/user/update/{id}	  | Admin	 | Update a user                                  |
+| GET	   | /api/user/list	  | Admin	 | Get the use list                               |
 
 
 
