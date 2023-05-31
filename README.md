@@ -1,6 +1,6 @@
 # ecommerce-impl
 A simple e-commerce project exercise implementation in diferent 
-programming languages and techs. Using a Clean Architecture.
+programming languages and techs. Using a Clean Architecture principles.
 
 ### Data model
 ![Screenshot of ecommerce](media/app-data-model.png)
@@ -53,8 +53,7 @@ yarn start
 
 ### Todo
 
-* write the OpenAPI v3 specification 
-* add swagger-ui
+* finish the OpenAPI v3 specification 
 * implement a prediction server
 * implement a recomendation engine
 * implement a health check API
