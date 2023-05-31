@@ -16,23 +16,23 @@ programming languages and techs. Using a Clean Architecture principles.
 
 #### Routes
 
-| Method    | Path                        | Role Required    | Description                                    |
-| --------- | --------------------------- | ---------------- | ---------------------------------------------- |
-| POST	   | /api/login	  | Anonymous	 | Auth                                           |
-| POST	   | /api/product/create	  | Editor or Admin	 | Create a new product                           |
-| DELETE	   | /api/product/delete/{id}	  | Editor or Admin	 | Delete a Product                               |
-| GET	   | /api/product/{sku}	  | User	 | Get a product by Sku(Uuid v4) property         |      
-| PATCH	   | /api/product/update/{id}	  | Editor or Admin	 | Update a product using  Id property            |            
-| GET	   | /api/product/search	  | User	 | Search a product                               |
-| GET	   | /api/product/search-total	  | User	 | Get total of product that match with a search  |                      
-| GET	   | /api/product/out-stock	  | Editor or Admin	 | List Products out of stock                     |   
-| POST	   | /api/sale/create	  | User	 | Sale a product                                 |
-| GET	   | /api/sale/list-products	  | User	 | List all products that has been sale           |             
-| GET	   | /api/sale/calc-profit	  | Editor or Admin	 | Get the profit of sales                        |
-| POST	   | /api/user/register	  | Anonymous	 | Register a new user                            |
-| GET	   | /api/user	  | User	 | Get user info using the JWT token              |          
-| PATCH	   | /api/user/update/{id}	  | Admin	 | Update a user                                  |
-| GET	   | /api/user/list	  | Admin	 | Get the use list                               |
+| Method    | Path                        | Role Required    | Description                                         |
+| --------- | --------------------------- | ---------------- | --------------------------------------------------- |
+| POST	   | /api/login	  | Anonymous	 | Auth                                                |
+| POST	   | /api/product/create	  | Editor or Admin	 | Create a new product                                |
+| DELETE	   | /api/product/delete/{id}	  | Editor or Admin	 | Delete a Product                                    |
+| GET	   | /api/product/{sku}	  | User	 | Get a product by Sku(Stock Keeping Unit) property   |
+| PATCH	   | /api/product/update/{id}	  | Editor or Admin	 | Update a product using  Id property                 |
+| GET	   | /api/product/search	  | User	 | Search a product                                    |
+| GET	   | /api/product/search-total	  | User	 | Get total of product that match with a search       |
+| GET	   | /api/product/out-stock	  | Editor or Admin	 | List Products out of stock                          |
+| POST	   | /api/sale/create	  | User	 | Sale a product                                      |
+| GET	   | /api/sale/list-products	  | User	 | List all products that has been sale                |
+| GET	   | /api/sale/calc-profit	  | Editor or Admin	 | Get the profit of sales                             |
+| POST	   | /api/user/register	  | Anonymous	 | Register a new user                                 |
+| GET	   | /api/user	  | User	 | Get user info using the JWT token                   |
+| PATCH	   | /api/user/update/{id}	  | Admin	 | Update a user                                       |
+| GET	   | /api/user/list	  | Admin	 | Get the user list                                   |
 
 
 
