@@ -146,7 +146,7 @@ class Product implements \Stringable {
     $this->description = '';
     $this->aditionalInfo = '';
     $this->valoration = 0;
-    $this->sku = Uuid::v4()->toRfc4122();
+    $this->sku = $this->generateSku();
     $this->images = [];
     $this->sales = new ArrayCollection();
   }
@@ -465,6 +465,45 @@ class Product implements \Stringable {
   public function isAvailable(): bool 
   {
     return $this->unitsInStock > 0;
+  }
+
+  /**
+   * Generate a product sku
+   *
+   * @return bool
+  */
+  public function generateSku(): string {
+    $alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $numeric = "0123456789";
+    $sku = "";
+    
+    // Generate the first three uppercase letters
+    for ($i = 0; $i < 3; $i++) {
+      $sku .= $alphabet[rand(0, strlen($alphabet) - 1)];
+    }
+    
+    $sku .= '-';
+    
+    // Generate the four digits
+    for ($i = 0; $i < 4; $i++) {
+      $sku .= $numeric[rand(0, strlen($numeric) - 1)];
+    }
+    
+    $sku .= '-';
+
+    // Generate the next three uppercase letters
+    for ($i = 0; $i < 3; $i++) {
+      $sku .= $alphabet[rand(0, strlen($alphabet) - 1)];
+    }
+
+    $sku .= '-';
+
+    // Generate the final four digits
+    for ($i = 0; $i < 4; $i++) {
+      $sku .= $numeric[rand(0, strlen($numeric) - 1)];
+    }
+    
+    return $sku;
   }
 
   /**

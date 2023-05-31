@@ -4,6 +4,7 @@ namespace App\Usecases\Product;
 
 use App\Contracts\ISearchService;
 use App\DTO\Product\CreateProduct;
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
@@ -37,7 +38,10 @@ class CreateProductUsecase extends BaseUsecase {
     $categoryName = $dto->category;
     $category = $this->categoryRepo->findOneByName($categoryName);
     if(!$category){
-      throw new \Exception("The $categoryName not exist");
+      //throw new \Exception("The $categoryName not exist");
+      $category = new Category();
+      $category->setName($categoryName);
+      $this->categoryRepo->save($category);
     }
 
     $new = new Product();

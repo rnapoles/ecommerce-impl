@@ -31,7 +31,7 @@ class CreateProduct
 
     public ?string $aditionalInfo = '';
 
-    public ?string $sku;
+    public ?string $sku = null;
 
     #[Assert\Range(
         min: 1,

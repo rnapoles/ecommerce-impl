@@ -42,6 +42,7 @@ SEARCH_ENGINE_DSN=http://127.0.0.1:7700
 
 ```
 symfony check:requirements
+symfony server:ca:install
 composer update
 php bin\console doctrine:schema:update --force
 php bin\console app:setup-search-engine
