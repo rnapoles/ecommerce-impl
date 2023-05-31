@@ -19,7 +19,7 @@ programming languages and techs. Using a Clean Architecture principles.
 | Method    | Path                        | Role Required    | Description                                    |
 | --------- | --------------------------- | ---------------- | ---------------------------------------------- |
 | POST	   | /api/login	  | Anonymous	 | Auth                                           |
-| POST	   | /api/product/create	  | User	 | Create a new product                           |
+| POST	   | /api/product/create	  | Editor or Admin	 | Create a new product                           |
 | DELETE	   | /api/product/delete/{id}	  | Editor or Admin	 | Delete a Product                               |
 | GET	   | /api/product/{sku}	  | User	 | Get a product by Sku(Uuid v4) property         |      
 | PATCH	   | /api/product/update/{id}	  | Editor or Admin	 | Update a product using  Id property            |            
