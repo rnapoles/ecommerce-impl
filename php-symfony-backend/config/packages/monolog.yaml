@@ -6,10 +6,18 @@ when@dev:
     monolog:
         handlers:
             main:
-                type: stream
+                type: rotating_file
+                max_files: 1
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
                 channels: ["!event"]
+            sec:
+                type: rotating_file
+                max_files: 1
+                path: "%kernel.logs_dir%/req.json"
+                formatter: 'monolog.formatter.json'
+                level: debug
+                channels: ["doctrine", "request"]
             # uncomment to get logging in your browser
             # you may have to allow bigger header sizes in your Web server configuration
             #firephp:

@@ -348,6 +348,11 @@ os-tmpdir@~1.0.2:
   resolved "https://nexus.uclv.edu.cu/repository/npm/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==
 
+pipeline-js@^1.0.2:
+  version "1.0.2"
+  resolved "https://nexus.uclv.edu.cu/repository/npm/pipeline-js/-/pipeline-js-1.0.2.tgz#1a05c0687784ffd691f11ad2cbb883a31da9a2cc"
+  integrity sha512-wJk4RkiOooIVSVDFsXbTro8PjqVP77S4DiSfZvzMXqU4/lXqqNAaMEAV4GgVpuVOqRy3LuVGa3FYsxJtP1WaiA==
+
 proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://nexus.uclv.edu.cu/repository/npm/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"

@@ -18,6 +18,7 @@
     "faker": "5.5.3",
     "inquirer": "^9.2.6",
     "jsonschema": "^1.4.1",
+    "pipeline-js": "^1.0.2",
     "uuid": "^9.0.0"
   }
 }
